@@ -63,7 +63,7 @@ module VagrantPlugins
           b.use PrepareNFSSettings
           b.use ClearNetworkInterfaces
           b.use Network
-          b.use ForwardPorts
+          b.use action_forward_ports
           b.use SetHostname
           b.use SaneDefaults
           b.use Customize, "pre-boot"
@@ -318,6 +318,13 @@ module VagrantPlugins
             end
           end
           b.use action_start
+        end
+      end
+
+      # This is the action that is called to forward ports.
+      def self.action_forward_ports
+        Vagrant::Action::Builder.new.tap do |b|
+          b.use ForwardPorts
         end
       end
     end
